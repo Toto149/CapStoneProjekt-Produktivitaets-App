@@ -15,7 +15,10 @@
     <description>backend</description>
     <properties>
         <java.version>21</java.version>
+        <sonar.organization>toto149</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -55,6 +58,7 @@
             <artifactId>reactor-test</artifactId>
             <scope>test</scope>
         </dependency>
+
     </dependencies>
 
     <build>
