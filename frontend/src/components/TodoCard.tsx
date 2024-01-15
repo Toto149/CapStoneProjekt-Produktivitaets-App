@@ -1,8 +1,8 @@
 import {Todo} from "../model/Todo.ts";
 
-export default function TodoCard(props : Todo){
+export default function TodoCard(props : Readonly<Todo>){
 
-    function importanceColor(props : Todo){
+    /**function importanceColor(props ){
         switch(props.gradeOfImportance) {
             case "Barely_Important":
                 return "Yellow"
@@ -20,16 +20,20 @@ export default function TodoCard(props : Todo){
     const style2 = {
         backgroundColor: color
     }
+        **/
+    //<div className="color-importance-idication-box" style={style2} > -->
+
+// </div> -->
     return(
-        <>
-            <div className="container">
-                <div className="color-importance-idication-box" style={style2} >
 
-                </div>
+        <div className="container">
                 <h3>{props.title}</h3>
+                <p>{props.description}</p>
+                <ul>
+                    <li>Beginn: {props.startDate.toDateString()}</li>
+                    <li>Deadline: {props.deadline.toDateString()}</li>
+                </ul>
+        </div>
 
-
-            </div>
-        </>
     );
 }
