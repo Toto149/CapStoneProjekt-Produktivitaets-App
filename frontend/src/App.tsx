@@ -1,8 +1,10 @@
-import { useState } from 'react'
+import {useEffect, useState} from 'react'
 import './App.css'
 import Calendar from "react-calendar";
 import TodoCard from "./components/TodoCard.tsx";
 import {Todo} from "./model/Todo.ts";
+import "./Calender.css"
+import axios from "axios";
 
 type ValuePiece = Date | null;
 
@@ -11,28 +13,40 @@ type Value = ValuePiece | [ValuePiece, ValuePiece];
 
 
 function App() {
-  const [value, setValue] = useState<Value>(new Date());
+    const [value, setValue] = useState<Value>(new Date());
+    const [todos, setTodos] = useState<Todo[]>([{
+        id: "1",
+        title: "test",
+        description: "testetstets",
+        startDate: new Date(),
+        deadline: new Date()
+    }])
 
-    const listOfTodos: Todo[]= [
-        {
-            id: "1",
-            title: "test",
-            description: "test",
-            startDate: new Date("2023-01-02"),
-            deadline: new Date("2024-01-17")
+    const fetchTodos = () => {
+        axios.get("/todo/")
+            .then(response => setTodos(response.data))
+            .catch( error => console.error("Error retrieving data: ", error));
+    };
+
+    useEffect(() => {
+        alert("lol");
+        fetchTodos();
+        alert("lol2");
+    }, []);
 
 
-        }
-    ];
+
+
   return (
     <div>
       <Calendar onChange={setValue} value={value} />
         {
-            listOfTodos.map(
+            todos.map(
                 todo => {
                     if(!(value) || "getDate" in value
-                    && todo.startDate.getDate() <= value.getDate()
-                    && todo.deadline.getDate() >= value.getDate())
+                        && value >= todo.startDate
+                        && value <= todo.deadline
+                    )
                     {
                         return (   <TodoCard
                                     key={todo.id}
@@ -46,8 +60,7 @@ function App() {
                     }
                 }
             )
-        }
-
+    }
     </div>
   )
 }
