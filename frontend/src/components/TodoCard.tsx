@@ -30,8 +30,8 @@ export default function TodoCard(props : Readonly<Todo>){
                 <h3>{props.title}</h3>
                 <p>{props.description}</p>
                 <ul>
-                    <li>Beginn: {props.startDate.toDateString()}</li>
-                    <li>Deadline: {props.deadline.toDateString()}</li>
+                    <li>Beginn: {props.startDate.toLocaleDateString() + " " + props.startDate.toLocaleTimeString()}</li>
+                    <li>Deadline: {props.deadline.toLocaleDateString() + " " + props.deadline.toLocaleTimeString()}</li>
                 </ul>
         </div>
 
