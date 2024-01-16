@@ -3,6 +3,7 @@ package com.example.backend.service;
 import com.example.backend.model.CompletionTime;
 import com.example.backend.model.Importance;
 import com.example.backend.model.Todo;
+import com.example.backend.model.TodoShort;
 import com.example.backend.repository.TodoRepository;
 import org.junit.jupiter.api.Test;
 
@@ -22,26 +23,24 @@ class TodoServiceTest {
     void testGetAllTodos_whenCalled_thenReturnsAllPersons() {
         //GIVEN
         LocalDateTime time = LocalDateTime.now();
-        List<Todo> expected = List.of(new Todo(
+        List<TodoShort> expected = List.of(new TodoShort(
                         "123",
                         "Test",
                         "Alles klar",
                         time,
-                        Importance.BARELY_IMPORTANT,
-                        new CompletionTime(10, TimeUnit.MINUTES)
+                        time
                 ));
 
-         when(todoRepo.findAll()).thenReturn(List.of(new Todo(
+         when(todoRepo.findAll()).thenReturn(List.of(new TodoShort(
                  "123",
                  "Test",
                  "Alles klar",
                  time,
-                 Importance.BARELY_IMPORTANT,
-                 new CompletionTime(10, TimeUnit.MINUTES)
+                 time
          )));
 
         //WHEN
-        List<Todo> actual = service.getAllTodos();
+        List<TodoShort> actual = service.getAllTodos();
 
         //THEN
         assertEquals(expected, actual);
