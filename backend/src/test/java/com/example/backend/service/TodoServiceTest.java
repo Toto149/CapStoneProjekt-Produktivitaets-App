@@ -1,16 +1,12 @@
 package com.example.backend.service;
 
-import com.example.backend.model.CompletionTime;
-import com.example.backend.model.Importance;
-import com.example.backend.model.Todo;
-import com.example.backend.model.TodoShort;
+import com.example.backend.model.*;
 import com.example.backend.repository.TodoRepository;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
+
 
 import static org.mockito.Mockito.mock;
 import static org.junit.jupiter.api.Assertions.*;
@@ -27,16 +23,16 @@ class TodoServiceTest {
                         "123",
                         "Test",
                         "Alles klar",
-                        time,
-                        time
+                LocalDateTime.of(2024,1,16,12,34,56),
+                LocalDateTime.of(2024,1,16,12,34,56)
                 ));
 
-         when(todoRepo.findAll()).thenReturn(List.of(new TodoShort(
+         when(todoRepo.findAll()).thenReturn(List.of(new TodoShortInternalDTO(
                  "123",
                  "Test",
                  "Alles klar",
-                 time,
-                 time
+                 "2024-01-16T12:34:56",
+                 "2024-01-16T12:34:56"
          )));
 
         //WHEN
@@ -46,4 +42,5 @@ class TodoServiceTest {
         assertEquals(expected, actual);
 
     }
+
 }
