@@ -3,7 +3,6 @@ import './App.css'
 import Calendar from "react-calendar";
 import TodoCard from "./components/TodoCard.tsx";
 import {Todo} from "./model/Todo.ts";
-import "./Calender.css"
 import axios from "axios";
 
 type ValuePiece = Date | null;
@@ -20,19 +19,30 @@ function App() {
         description: "testetstets",
         startDate: new Date(),
         deadline: new Date()
+
     }])
 
     const fetchTodos = () => {
-        axios.get("/todo/")
-            .then(response => setTodos(response.data))
-            .catch( error => console.error("Error retrieving data: ", error));
+        axios.get("/todo")
+            .then(response => {
+                const todos = response.data.map(
+                    todo => {
+                        return ({
+                            id: todo.id,
+                            title: todo.title,
+                            description: todo.description,
+                            startDate: new Date(todo.startDate),
+                            deadline: new Date(todo.deadline)
+                        });
+                    });
+                setTodos(todos)
+            })
+            .catch( error => console.error("Error fetching data: ", error));
     };
 
     useEffect(() => {
-        alert("lol");
         fetchTodos();
-        alert("lol2");
-    }, []);
+    }, [setValue]);
 
 
 
