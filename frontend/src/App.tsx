@@ -26,7 +26,7 @@ function App() {
         axios.get("/todo")
             .then(response => {
                 const todos = response.data.map(
-                    todo => {
+                     (todo :Todo) => {
                         return ({
                             id: todo.id,
                             title: todo.title,

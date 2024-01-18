@@ -13,7 +13,6 @@ export default function TodoForm(props: Readonly<Todo>){
 
 
     return (
-        <>
             <form onSubmit={handleSubmit}>
                 <input
                     type="text"
@@ -28,6 +27,5 @@ export default function TodoForm(props: Readonly<Todo>){
 
 
             </form>
-        </>
     );
 }

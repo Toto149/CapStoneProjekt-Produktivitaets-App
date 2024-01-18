@@ -1,7 +1,7 @@
 package com.example.backend.model;
 
+import lombok.NonNull;
 import org.springframework.format.Formatter;
-import org.springframework.stereotype.Component;
 
 import java.text.ParseException;
 import java.time.LocalDateTime;
@@ -16,12 +16,14 @@ public class LocalDateFormatter implements Formatter<LocalDateTime> {
 
 
     @Override
-    public LocalDateTime parse(String text, Locale locale) throws ParseException {
+    @NonNull
+    public LocalDateTime parse(@NonNull String text,@NonNull Locale locale) throws ParseException {
         return LocalDateTime.parse(text, dateTimeFormatter);
     }
 
     @Override
-    public String print(LocalDateTime object, Locale locale){
+    @NonNull
+    public String print(@NonNull LocalDateTime object,@NonNull Locale locale){
         return dateTimeFormatter.format(object);
     }
 

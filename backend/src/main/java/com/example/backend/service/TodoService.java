@@ -1,7 +1,7 @@
 package com.example.backend.service;
 
 import com.example.backend.model.TodoShort;
-import com.example.backend.model.TodoShortInternalDTO;
+import com.example.backend.model.TodoShortDB;
 import com.example.backend.repository.TodoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,13 +15,13 @@ import java.util.List;
 public class TodoService {
     private final TodoRepository repo;
     public List<TodoShort> getAllTodos() {
-        List<TodoShortInternalDTO> todos = repo.findAll();
-        return transformTodoInternalToTodoShort(todos);
+        List<TodoShortDB> todos = repo.findAll();
+        return transformTodoShortDBToTodoShort(todos);
 
     }
 
 
-    public static List<TodoShort> transformTodoInternalToTodoShort(List<TodoShortInternalDTO> todos){
+    public static List<TodoShort> transformTodoShortDBToTodoShort(List<TodoShortDB> todos){
         return todos.stream().map(
                 todoInter -> new TodoShort(
                             todoInter.id(),

@@ -18,7 +18,6 @@ class TodoServiceTest {
     @Test
     void testGetAllTodos_whenCalled_thenReturnsAllPersons() {
         //GIVEN
-        LocalDateTime time = LocalDateTime.now();
         List<TodoShort> expected = List.of(new TodoShort(
                         "123",
                         "Test",
@@ -27,7 +26,7 @@ class TodoServiceTest {
                 LocalDateTime.of(2024,1,16,12,34,56)
                 ));
 
-         when(todoRepo.findAll()).thenReturn(List.of(new TodoShortInternalDTO(
+         when(todoRepo.findAll()).thenReturn(List.of(new TodoShortDB(
                  "123",
                  "Test",
                  "Alles klar",
@@ -40,6 +39,33 @@ class TodoServiceTest {
 
         //THEN
         assertEquals(expected, actual);
+
+    }
+
+    @Test
+    void testTransformTodo_whenCalled_thenReturnsTodoShort() {
+        //GIVEN
+        List<TodoShortDB> todoIntList =List.of( new TodoShortDB(
+                "Test",
+                "Test",
+                "Test",
+                "2024-12-12T12:12:12",
+                "2024-12-12T12:12:12"
+        ));
+        List<TodoShort> expected = List.of(new TodoShort(
+                "Test",
+                "Test",
+                "Test",
+                LocalDateTime.of(2024,12,12,12,12,12),
+                LocalDateTime.of(2024,12,12,12,12,12)
+        ));
+
+        //WHEN
+        List<TodoShort> actual = TodoService.transformTodoShortDBToTodoShort(todoIntList);
+
+        //THEN
+        assertEquals(actual,expected);
+
 
     }
 
