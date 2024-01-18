@@ -1,34 +1,77 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import {useEffect, useState} from 'react'
 import './App.css'
+import Calendar from "react-calendar";
+import TodoCard from "./components/TodoCard.tsx";
+import {Todo} from "./model/Todo.ts";
+import axios from "axios";
+
+type ValuePiece = Date | null;
+
+type Value = ValuePiece | [ValuePiece, ValuePiece];
+
+
 
 function App() {
-  const [count, setCount] = useState(0)
+    const [value, setValue] = useState<Value>(new Date());
+    const [todos, setTodos] = useState<Todo[]>([{
+        id: "1",
+        title: "test",
+        description: "testetstets",
+        startDate: new Date(),
+        deadline: new Date()
+
+    }])
+
+    const fetchTodos = () => {
+        axios.get("/todo")
+            .then(response => {
+                const todos = response.data.map(
+                     (todo :Todo) => {
+                        return ({
+                            id: todo.id,
+                            title: todo.title,
+                            description: todo.description,
+                            startDate: new Date(todo.startDate),
+                            deadline: new Date(todo.deadline)
+                        });
+                    });
+                setTodos(todos)
+            })
+            .catch( error => console.error("Error fetching data: ", error));
+    };
+
+    useEffect(() => {
+        fetchTodos();
+    }, [setValue]);
+
+
+
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div>
+      <Calendar onChange={setValue} value={value} />
+        {
+            todos.map(
+                todo => {
+                    if(!(value) || "getDate" in value
+                        && value >= todo.startDate
+                        && value <= todo.deadline
+                    )
+                    {
+                        return (   <TodoCard
+                                    key={todo.id}
+                                    id={todo.id}
+                                    title={todo.title}
+                                    description={todo.description}
+                                    startDate={todo.startDate}
+                                    deadline={todo.deadline}
+                                />
+                            );
+                    }
+                }
+            )
+    }
+    </div>
   )
 }
 

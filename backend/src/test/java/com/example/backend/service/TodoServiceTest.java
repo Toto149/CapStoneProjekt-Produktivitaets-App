@@ -1,15 +1,12 @@
 package com.example.backend.service;
 
-import com.example.backend.model.CompletionTime;
-import com.example.backend.model.Importance;
-import com.example.backend.model.Todo;
+import com.example.backend.model.*;
 import com.example.backend.repository.TodoRepository;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
+
 
 import static org.mockito.Mockito.mock;
 import static org.junit.jupiter.api.Assertions.*;
@@ -21,30 +18,55 @@ class TodoServiceTest {
     @Test
     void testGetAllTodos_whenCalled_thenReturnsAllPersons() {
         //GIVEN
-        LocalDateTime time = LocalDateTime.now();
-        List<Todo> expected = List.of(new Todo(
+        List<TodoShort> expected = List.of(new TodoShort(
                         "123",
                         "Test",
                         "Alles klar",
-                        time,
-                        Importance.BARELY_IMPORTANT,
-                        new CompletionTime(10, TimeUnit.MINUTES)
+                LocalDateTime.of(2024,1,16,12,34,56),
+                LocalDateTime.of(2024,1,16,12,34,56)
                 ));
 
-         when(todoRepo.findAll()).thenReturn(List.of(new Todo(
+         when(todoRepo.findAll()).thenReturn(List.of(new TodoShortDB(
                  "123",
                  "Test",
                  "Alles klar",
-                 time,
-                 Importance.BARELY_IMPORTANT,
-                 new CompletionTime(10, TimeUnit.MINUTES)
+                 "2024-01-16T12:34:56",
+                 "2024-01-16T12:34:56"
          )));
 
         //WHEN
-        List<Todo> actual = service.getAllTodos();
+        List<TodoShort> actual = service.getAllTodos();
 
         //THEN
         assertEquals(expected, actual);
 
     }
+
+    @Test
+    void testTransformTodo_whenCalled_thenReturnsTodoShort() {
+        //GIVEN
+        List<TodoShortDB> todoIntList =List.of( new TodoShortDB(
+                "Test",
+                "Test",
+                "Test",
+                "2024-12-12T12:12:12",
+                "2024-12-12T12:12:12"
+        ));
+        List<TodoShort> expected = List.of(new TodoShort(
+                "Test",
+                "Test",
+                "Test",
+                LocalDateTime.of(2024,12,12,12,12,12),
+                LocalDateTime.of(2024,12,12,12,12,12)
+        ));
+
+        //WHEN
+        List<TodoShort> actual = TodoService.transformTodoShortDBToTodoShort(todoIntList);
+
+        //THEN
+        assertEquals(actual,expected);
+
+
+    }
+
 }
