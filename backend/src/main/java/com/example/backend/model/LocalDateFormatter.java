@@ -1,5 +1,5 @@
 package com.example.backend.model;
-/**
+
 import lombok.NonNull;
 import org.springframework.format.Formatter;
 
@@ -12,7 +12,7 @@ import java.util.Locale;
 public class LocalDateFormatter implements Formatter<LocalDateTime> {
 
     private static final DateTimeFormatter dateTimeFormatter =
-            DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm:ss");
+            DateTimeFormatter.ISO_LOCAL_DATE_TIME;
 
 
     @Override
@@ -28,4 +28,3 @@ public class LocalDateFormatter implements Formatter<LocalDateTime> {
     }
 
 }
-**/
