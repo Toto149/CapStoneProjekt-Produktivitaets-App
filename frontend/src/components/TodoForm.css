@@ -1,0 +1,17 @@
+.form-container{
+    display: flex;
+    justify-content: right;
+    justify-items: center;
+    flex-direction: column;
+    margin-right: 15%;
+    margin-top: 20px;
+    background-color: #3C0753;
+    border: 1px solid #213547;
+}
+.todo-form{
+    width: 50%;
+    margin-right: 15%;
+    justify-content: center;
+}
+.form-element{
+}
