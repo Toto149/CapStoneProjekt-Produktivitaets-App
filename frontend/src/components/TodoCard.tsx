@@ -1,5 +1,5 @@
 import "./TodoCard.css"
-import React, {ChangeEvent, useState} from "react";
+import React, {ChangeEvent, FormEvent, useState} from "react";
 
 export type propsTodo = {
     id:string,
@@ -8,7 +8,7 @@ export type propsTodo = {
     startDate: Date,
     deadline: Date,
     delete: (id:string) => void,
-    submitHandler: (id:string) => void,
+    submitHandler: (id:string, event:FormEvent<HTMLFormElement>) => void,
     setTitle: React.Dispatch<React.SetStateAction<string>>,
     setDes : React.Dispatch<React.SetStateAction<string>>,
     setStart : React.Dispatch<React.SetStateAction<Date>>,
@@ -55,7 +55,7 @@ export default function TodoCard(props : Readonly<propsTodo>){
                         <li>Deadline: {props.deadline.toLocaleDateString() + " " + props.deadline.toLocaleTimeString()}</li>
                     </ul>
                 {isEditClicked && !isSubmitClicked &&
-                    <form onSubmit={props.submitHandler} className="todo-form">
+                    <form onSubmit={event => props.submitHandler(props.id,event)} className="todo-form">
                         <div className="form-element">
                             <label htmlFor="todo-title" > Choose a title:   </label>
                             <input
@@ -87,7 +87,7 @@ export default function TodoCard(props : Readonly<propsTodo>){
                             />
 
                         </div>
-                        <button className="submit-button" onSubmit={props.submitHandler}>Submit</button>
+                        <button className="submit-button" onSubmit={event=> props.submitHandler(props.id,event)}>Submit</button>
                     </form>}
                 <button className="edit-button" onClick={handleEdit}>Edit</button>
                 <div className="button-footer">
