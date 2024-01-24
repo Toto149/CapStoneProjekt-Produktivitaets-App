@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from "react";
+import React, {ChangeEvent, FormEvent} from "react";
 
 
 
@@ -7,7 +7,7 @@ export type TodoSubmit = {
     description: string,
     startDate: Date,
     deadline: Date,
-    submitHandler: () => void,
+    submitHandler: (event:FormEvent<HTMLFormElement>) => void,
     setTitle: React.Dispatch<React.SetStateAction<string>>,
     setDes : React.Dispatch<React.SetStateAction<string>>,
     setStart : React.Dispatch<React.SetStateAction<Date>>,
@@ -71,7 +71,7 @@ export default function TodoForm(props: Readonly<TodoSubmit>){
                        onChange={event => handleDeadlineChange(event)}
                     />
                 </div>
-                <button onSubmit={props.submitHandler}> Submit </button>
+                <button onSubmit={event=> props.submitHandler(event)}> Submit </button>
             </form>
             </div>
           </div>
