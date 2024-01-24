@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import {FormEvent, useEffect, useState} from 'react'
 import './App.css'
 import Calendar from "react-calendar";
 import TodoCard from "./components/TodoCard.tsx";
@@ -32,7 +32,8 @@ function App() {
         return date.toISOString().slice(0,16);
 
     }
-    const handleSubmit = () => {
+    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
         axios.post("/api/todo/save",
             {
                 title: titleValue,
@@ -40,12 +41,16 @@ function App() {
                 startDate: formatToLocalDateTimeString(startDate),
                 deadline: formatToLocalDateTimeString(deadline)
             })
-            .then(response => setTodos([...todos, response.data]))
+            .then(response => {
+                const todosNew = todos.concat([response.data])
+                setTodos(todosNew);})
+            .then(fetchTodos)
             .catch(error => console.error("Error posting Data: ", error)
             );
 
     };
-    const handleUpdate = (id:string) => {
+    const handleUpdate = (id:string, event:FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
         axios.put("/api/todo/save/" + id,
             {
                 title:titleValueEdit,
@@ -54,6 +59,7 @@ function App() {
                 deadline: formatToLocalDateTimeString(deadlineEdit)
             })
             .then(response => response.status === 200 ? alert("Update Successful") : alert("Update was unsuccessful"))
+            .then(fetchTodos)
             .catch(error => console.error("Error updating Data: ", error)
             );
     }
@@ -62,6 +68,7 @@ function App() {
             .then(response => {if(response.data){
                 alert("Todo removed succesfully!")
             }})
+            .then(fetchTodos)
             .catch(err => alert(err.message));
     };
     const fetchTodos =  () => {
@@ -84,7 +91,7 @@ function App() {
 
     useEffect(() => {
             fetchTodos();
-    }, [todos]);
+    }, []);
 
 
 
