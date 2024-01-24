@@ -61,13 +61,13 @@ export default function TodoCard(props : Readonly<propsTodo>){
                             <input
                                 type="text"
                                 value={props.titleEdit}
-                                onChange={event => {props.setTitle(event.target.value); event.preventDefault();}}/>
+                                onChange={event => {props.setTitle(event.target.value)}}/>
                         </div>
                         <div className="form-element">
                             <p >What do you want to be done? Write an apt description here:</p>
                             <input
                                 value={props.descriptionEdit}
-                                onChange={event => {props.setDes(event.target.value); event.preventDefault()}}
+                                onChange={event => {props.setDes(event.target.value)}}
                             />
                         </div>
                         <div className="form-element">
@@ -87,7 +87,7 @@ export default function TodoCard(props : Readonly<propsTodo>){
                             />
 
                         </div>
-                        <button className="submit-button" onSubmit={event=> props.submitHandler(props.id,event)}>Submit</button>
+                        <button className="submit-button" onSubmit={event => props.submitHandler(props.id,event)}>Submit</button>
                     </form>}
                 <button className="edit-button" onClick={handleEdit}>Edit</button>
                 <div className="button-footer">
