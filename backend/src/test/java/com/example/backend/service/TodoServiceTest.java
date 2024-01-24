@@ -14,7 +14,9 @@ import static org.mockito.Mockito.when;
 
 class TodoServiceTest {
     TodoRepository todoRepo = mock(TodoRepository.class);
-    TodoService service = new TodoService(todoRepo);
+    IdService idService = mock(IdService.class);
+    TodoService service = new TodoService(todoRepo,idService);
+
     @Test
     void testGetAllTodos_whenCalled_thenReturnsAllPersons() {
         //GIVEN
