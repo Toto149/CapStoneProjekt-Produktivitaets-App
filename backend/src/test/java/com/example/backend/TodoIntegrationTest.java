@@ -2,18 +2,18 @@ package com.example.backend;
 
 
 
+
 import com.example.backend.model.TodoShortDB;
 import com.example.backend.repository.TodoRepository;
-import com.example.backend.service.IdService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+
 
 
 @SpringBootTest
@@ -25,9 +25,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
     @Autowired
     private TodoRepository repo;
-    @Autowired
-    IdService service;
-
     @DirtiesContext
     @Test
     void getAllTodos_shouldReturnListWithOneTodo_whenOneTodoWasSavedInRepo() throws Exception {
@@ -66,37 +63,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
                 .andExpect(MockMvcResultMatchers.content().json("[]"
                 ));
     }
-   /* @DirtiesContext
-    @Test
-    void addTodo_shouldReturnCreatedTodo() throws Exception {
 
-        when(mock(service.getClass()).generateId()).thenReturn("1");
-        mvc.perform(MockMvcRequestBuilders.put("/api//save/1")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(
-                        """
-                    {
-                    "title": "Test",
-                    "description" : "Test",
-                    "startDate" : "2023-12-12T12:12:12",
-                    "deadline": "2023-12-12T12:12:12"
-                    }
-                    """
-                ))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().json(
-                        """
-                        
-                                {
-                            "id": "1",
-                            "title" : "Test",
-                            "description" : "Test",
-                            "startDate": "2023-12-12T12:12:12",
-                            "deadline" : "2023-12-12T12:12:12"
-                        }
-                        """
-                ));
-    }*/
     @DirtiesContext
     @Test
     void deleteTodo_shouldReturnEmptyList_whenDeletingOnlyElement() throws Exception {
