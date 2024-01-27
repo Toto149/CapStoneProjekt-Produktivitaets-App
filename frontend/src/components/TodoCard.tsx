@@ -13,16 +13,20 @@ export type propsTodo = {
     setDes : React.Dispatch<React.SetStateAction<string>>,
     setStart : React.Dispatch<React.SetStateAction<Date>>,
     setDateDeadline : React.Dispatch<React.SetStateAction<Date>>,
+    setGradeOfImportanceEdit : React.Dispatch<React.SetStateAction<string>>,
+    setTimeToCompleteEdit : React.Dispatch<React.SetStateAction<string>>,
     titleEdit: string,
     descriptionEdit : string,
     startDateEdit: Date,
     deadlineEdit: Date
+    gradeOfImportanceEdit: string,
+    timeToCompleteEdit:string
 }
 
 export default function TodoCard(props : Readonly<propsTodo>){
     const [isEditClicked, setIsEditClicked] = useState<boolean>(false);
     const [isSubmitClicked, setIsSubmitClicked] = useState<boolean>(false);
-
+    const [isDetailClicked, setIsDetailClicked] = useState<boolean>(false);
     function formatDate(date: Date){
         return date.toISOString().slice(0,16);
     }
@@ -39,16 +43,40 @@ export default function TodoCard(props : Readonly<propsTodo>){
         setIsSubmitClicked(false);
     }
 
-
+    const handleDetail = () => {
+        setIsDetailClicked(!isDetailClicked);
+    }
 
     const handleDelete = () => {
         props.delete(props.id)
     }
 
     return(
-        <div className="container">
+        <div>
+            {!isDetailClicked &&
+                <div>
+                    <div className="button-title-container">
+                        <div className="title-container" >
+                            <h3>{props.title}</h3>
+                        </div>
+                        <div className="detail-button-container">
+                            <button onClick={handleDetail}>+</button>
+                        </div>
+                    </div>
+                    <p>Beginn: {props.startDate.toLocaleDateString() + " " + props.startDate.toLocaleTimeString()} <br/>
+                        Deadline: {props.deadline.toLocaleDateString() + " " + props.deadline.toLocaleTimeString()}</p>
+
+                </div>}
+        {isDetailClicked && <div className="container">
             <div className="card">
-                    <h3>{props.title}</h3>
+                    <div className="button-title-container">
+                        <div className="title-container" >
+                            <h3>{props.title}</h3>
+                         </div>
+                        <div className="detail-button-container">
+                            <button onClick={handleDetail}>-</button>
+                        </div>
+                    </div>
                     <p>{props.description}</p>
                     <ul>
                         <li>Beginn: {props.startDate.toLocaleDateString() + " " + props.startDate.toLocaleTimeString()}</li>
@@ -95,6 +123,7 @@ export default function TodoCard(props : Readonly<propsTodo>){
 
                 </div>
             </div>
+        </div>}
         </div>
     );
 }

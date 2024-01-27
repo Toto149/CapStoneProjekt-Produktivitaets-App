@@ -6,6 +6,7 @@ import { Todo } from "./model/Todo.ts";
 import axios from "axios";
 import TodoForm from "./components/TodoForm.tsx";
 import './Calendar.css'
+import {TodoLong} from "./model/TodoLong.ts";
 
 
 type ValuePiece = Date | null;
@@ -17,17 +18,22 @@ type Value = ValuePiece | [ValuePiece, ValuePiece];
 function App() {
     const [value, setValue] = useState<Value>(new Date());
     const [todos, setTodos] = useState<Todo[]>([])
+    const [longTodos, setLongTodos] = useState<TodoLong[]>([]);
+
 
     const [titleValue, setTitleValue] = useState<string>("");
     const [description, setDescription ] = useState<string>("");
     const [startDate, setStartDate] = useState<Date>(new Date());
     const [deadline, setDeadline] = useState<Date>(new Date());
+    const [gradeOfImportance, setGradeOfImportance] = useState<string>("");
+    const [timeToComplete, setTimeToComplete] = useState<string>("");
 
     const [titleValueEdit, setTitleValueEdit] = useState<string>("");
     const [descriptionEdit, setDescriptionEdit ] = useState<string>("");
     const [startDateEdit, setStartDateEdit] = useState<Date>(new Date());
     const [deadlineEdit, setDeadlineEdit] = useState<Date>(new Date());
-
+    const [gradeOfImportanceEdit, setGradeOfImportanceEdit] = useState<string>("");
+    const [timeToCompleteEdit, setTimeToCompleteEdit] = useState<string>("");
     function formatToLocalDateTimeString(date: Date): string {
         return date.toISOString().slice(0,16);
 
@@ -66,7 +72,7 @@ function App() {
     const handleDelete = (id:string) => {
         axios.delete("/api/todo/delete/" + id)
             .then(response => {if(response.data){
-                alert("Todo removed succesfully!")
+                alert("Todo removed successfully!")
             }})
             .then(fetchTodos)
             .catch(err => alert(err.message));
@@ -120,10 +126,14 @@ function App() {
                                     setDes={setDescriptionEdit}
                                     setStart={setStartDateEdit}
                                     setDateDeadline={setDeadlineEdit}
+                                    setGradeOfImportanceEdit={setGradeOfImportanceEdit}
+                                    setTimeToCompleteEdit={setTimeToCompleteEdit}
                                     titleEdit={titleValueEdit}
                                     descriptionEdit={descriptionEdit}
                                     startDateEdit={startDateEdit}
                                     deadlineEdit={deadlineEdit}
+                                    gradeOfImportanceEdit={gradeOfImportanceEdit}
+                                    timeToCompleteEdit={timeToCompleteEdit}
 
                                 />
                             );

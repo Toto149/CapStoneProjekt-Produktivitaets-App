@@ -27,15 +27,6 @@ export default function TodoForm(props: Readonly<TodoSubmit>){
         props.setDateDeadline(new Date(event.target.value));
         event.preventDefault();
     }
-    /*function submit(event:FormEventHandler<HTMLFormElement>) :   {
-        return {
-            id: null,
-            title: event.arguments.title,
-            description: event.arguments.description,
-            startDate: event.arguments.startDate,
-            deadline: event.arguments.deadline
-        }
-    }*/
 
     return (
         <div className="form-container">
