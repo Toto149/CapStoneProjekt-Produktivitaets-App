@@ -2,11 +2,11 @@ import {FormEvent, useEffect, useState} from 'react'
 import './App.css'
 import Calendar from "react-calendar";
 import TodoCard from "./components/TodoCard.tsx";
-import { Todo } from "./model/Todo.ts";
+import { Todo} from "./model/Todo.ts";
 import axios from "axios";
 import TodoForm from "./components/TodoForm.tsx";
 import './Calendar.css'
-import {TodoLong} from "./model/TodoLong.ts";
+
 
 
 type ValuePiece = Date | null;
@@ -17,35 +17,38 @@ type Value = ValuePiece | [ValuePiece, ValuePiece];
 
 function App() {
     const [value, setValue] = useState<Value>(new Date());
-    const [todos, setTodos] = useState<Todo[]>([])
-    const [longTodos, setLongTodos] = useState<TodoLong[]>([]);
-
+    const [todos, setTodos] = useState<Todo[]>([]);
 
     const [titleValue, setTitleValue] = useState<string>("");
     const [description, setDescription ] = useState<string>("");
     const [startDate, setStartDate] = useState<Date>(new Date());
     const [deadline, setDeadline] = useState<Date>(new Date());
-    const [gradeOfImportance, setGradeOfImportance] = useState<string>("");
-    const [timeToComplete, setTimeToComplete] = useState<string>("");
+    const [gradeOfImportancePost, setGradeOfImportancePost] = useState<number>(1);
+    const [timeToCompletePost, setTimeToCompletePost] = useState<string>("");
+
 
     const [titleValueEdit, setTitleValueEdit] = useState<string>("");
     const [descriptionEdit, setDescriptionEdit ] = useState<string>("");
     const [startDateEdit, setStartDateEdit] = useState<Date>(new Date());
     const [deadlineEdit, setDeadlineEdit] = useState<Date>(new Date());
-    const [gradeOfImportanceEdit, setGradeOfImportanceEdit] = useState<string>("");
+    const [gradeOfImportanceEdit, setGradeOfImportanceEdit] = useState<number>(1);
     const [timeToCompleteEdit, setTimeToCompleteEdit] = useState<string>("");
+
     function formatToLocalDateTimeString(date: Date): string {
         return date.toISOString().slice(0,16);
 
     }
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        console.log(timeToCompletePost)
         axios.post("/api/todo/save",
             {
                 title: titleValue,
                 description: description,
                 startDate: formatToLocalDateTimeString(startDate),
-                deadline: formatToLocalDateTimeString(deadline)
+                deadline: formatToLocalDateTimeString(deadline),
+                gradeOfImportance: gradeOfImportancePost,
+                timeToComplete: timeToCompletePost
             })
             .then(response => {
                 const todosNew = todos.concat([response.data])
@@ -62,7 +65,9 @@ function App() {
                 title:titleValueEdit,
                 description: descriptionEdit,
                 startDate: formatToLocalDateTimeString(startDateEdit),
-                deadline: formatToLocalDateTimeString(deadlineEdit)
+                deadline: formatToLocalDateTimeString(deadlineEdit),
+                gradeOfImportance: gradeOfImportanceEdit,
+                timeToComplete: timeToCompleteEdit
             })
             .then(response => response.status === 200 ? alert("Update Successful") : alert("Update was unsuccessful"))
             .then(fetchTodos)
@@ -87,7 +92,9 @@ function App() {
                             title: todo.title,
                             description: todo.description,
                             startDate: new Date(todo.startDate),
-                            deadline: new Date(todo.deadline)
+                            deadline: new Date(todo.deadline),
+                            gradeOfImportance: todo.gradeOfImportance,
+                            timeToComplete: todo.timeToComplete,
                         });
                     });
                 setTodos(todos)
@@ -120,6 +127,8 @@ function App() {
                                     description={todo.description}
                                     startDate={todo.startDate}
                                     deadline={todo.deadline}
+                                    gradeOfImportance={todo.gradeOfImportance}
+                                    timeToComplete={todo.timeToComplete}
                                     delete={handleDelete}
                                     submitHandler={handleUpdate}
                                     setTitle={setTitleValueEdit}
@@ -145,11 +154,16 @@ function App() {
               description={description}
               startDate={startDate}
               deadline={deadline}
+              gradeOfImportance={gradeOfImportancePost}
+              timeToComplete={timeToCompletePost}
               submitHandler={handleSubmit}
               setTitle={setTitleValue}
               setDes={setDescription}
               setStart={setStartDate}
               setDateDeadline={setDeadline}
+              setGradeOfImportancePost={setGradeOfImportancePost}
+              setTimeToCompletePost={setTimeToCompletePost}
+
     />
     </div>
   )
