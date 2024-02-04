@@ -36,7 +36,7 @@ export default function TodoForm(props: Readonly<TodoSubmit>){
         <div className="form-container">
             <div>
             <form onSubmit={props.submitHandler} className="todo-form">
-                <p> Add a Todo: </p>
+                <h3> Add a Todo: </h3>
                 <div className="form-element">
                     <p> Choose a title:   </p>
                 <input
@@ -86,7 +86,7 @@ export default function TodoForm(props: Readonly<TodoSubmit>){
                            onChange={event => {props.setTimeToCompletePost(event.target.value)}}
                     />
                 </div>
-                <button onSubmit={event=> props.submitHandler(event)}> Submit </button>
+                <button onSubmit={event=> props.submitHandler(event)} style={{ marginTop: "15px"}}> Submit </button>
 
             </form>
                 </div>

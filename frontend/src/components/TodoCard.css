@@ -25,7 +25,10 @@
     align-items: center;
     justify-content: center;
     height: 30%;
+    position: relative;
 }
 .detail-button-container{
-    margin-left: 10px;
+    position: absolute;
+    right: 10px;
+    top: 10px;
 }

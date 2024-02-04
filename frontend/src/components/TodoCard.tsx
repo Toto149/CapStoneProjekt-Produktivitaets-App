@@ -54,25 +54,44 @@ export default function TodoCard(props : Readonly<propsTodo>){
         props.delete(props.id)
     }
 
+    const gradeOfImportanceToText = (gradeOfImportance: string):string => {
+
+        switch (gradeOfImportance){
+            case "BARELY_IMPORTANT":
+                return "Barely important (1)";
+            case "MODERATELY_IMPORTANT":
+                return "Moderately important (2)";
+            case "IMPORTANT":
+                return "Important (3)";
+            case "QUITE_IMPORTANT":
+                return "Quite important (4)";
+            case "VERY_IMPORTANT":
+                return "Very important (5)";
+            default:
+                return "No grade of importance provided";
+        }
+    }
+
+
     return(
         <div>
             {!isDetailClicked &&
                 <div>
-                    <div className="button-title-container">
-                        <div className="title-container" >
+                    <div className="button-title-container" style={{ position: 'relative' }}>
+                        <div className="title-container">
                             <h3>{props.title}</h3>
                         </div>
-                        <div className="detail-button-container">
+                        <div className="detail-button-container" >
                             <button onClick={handleDetail}>+</button>
                         </div>
                     </div>
-                    <p>Beginn: {props.startDate.toLocaleDateString() + " " + props.startDate.toLocaleTimeString()} <br/>
-                        Deadline: {props.deadline.toLocaleDateString() + " " + props.deadline.toLocaleTimeString()} </p>
-
+                    <div>
+                        <p>Deadline: {props.deadline.toLocaleTimeString()} </p>
+                    </div>
                 </div>}
         {isDetailClicked && <div className="container" >
             <div className="card" >
-                    <div className="button-title-container">
+                    <div className="button-title-container" style={{ position: 'relative' }}>
                         <div className="title-container" >
                             <h3>{props.title}</h3>
                          </div>
@@ -84,7 +103,7 @@ export default function TodoCard(props : Readonly<propsTodo>){
                     <ul>
                         <li>Beginn: {props.startDate.toLocaleDateString() + " " + props.startDate.toLocaleTimeString()}</li>
                         <li>Deadline: {props.deadline.toLocaleDateString() + " " + props.deadline.toLocaleTimeString()}</li>
-                        <li>Grade of Importance: {props.gradeOfImportance.toString()}</li>
+                        <li>Grade of Importance: {gradeOfImportanceToText(props.gradeOfImportance.toString())}</li>
                         <li>How long it takes: {props.timeToComplete.amount +" " + props.timeToComplete.timeUnit.toString().toLowerCase()} </li>
                     </ul>
                 {isEditClicked && !isSubmitClicked &&

@@ -50,7 +50,7 @@ jobs:
 
       - uses: actions/upload-artifact@v3
         with:
-          name: Todo_App.jar
+          name: Todo-App.jar
           path: backend/target/Todo_App.jar
 
 
@@ -62,7 +62,7 @@ jobs:
 
       - uses: actions/download-artifact@v3
         with:
-          name: productivity-app.jar
+          name: Todo-App.jar
           path: backend/target
 
       - name: Login to Docker
