@@ -1,4 +1,4 @@
-name: "Deploy Produktivitäts-App"
+name: "Deploy Productivity-App"
 
 on:
   push:
@@ -50,8 +50,8 @@ jobs:
 
       - uses: actions/upload-artifact@v3
         with:
-          name: productivity-app.jar
-          path: backend/target/productivity-app.jar
+          name: Todo-App.jar
+          path: backend/target/Todo_App.jar
 
 
   push-to-docker-hun:
@@ -62,7 +62,7 @@ jobs:
 
       - uses: actions/download-artifact@v3
         with:
-          name: productivity-app.jar
+          name: Todo-App.jar
           path: backend/target
 
       - name: Login to Docker

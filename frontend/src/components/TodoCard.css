@@ -20,3 +20,15 @@
 .submit-button{
     margin-right: 10%;
 }
+.button-title-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 30%;
+    position: relative;
+}
+.detail-button-container{
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}

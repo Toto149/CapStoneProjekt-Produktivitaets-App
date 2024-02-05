@@ -1,5 +1,5 @@
 import React, {ChangeEvent, FormEvent} from "react";
-
+import { formatDate } from "./UtilFunctions.ts"
 
 
 export type TodoSubmit = {
@@ -7,18 +7,21 @@ export type TodoSubmit = {
     description: string,
     startDate: Date,
     deadline: Date,
+    gradeOfImportance: number,
+    timeToComplete: string,
     submitHandler: (event:FormEvent<HTMLFormElement>) => void,
     setTitle: React.Dispatch<React.SetStateAction<string>>,
     setDes : React.Dispatch<React.SetStateAction<string>>,
     setStart : React.Dispatch<React.SetStateAction<Date>>,
-    setDateDeadline : React.Dispatch<React.SetStateAction<Date>>
+    setDateDeadline : React.Dispatch<React.SetStateAction<Date>>,
+    setGradeOfImportancePost : React.Dispatch<React.SetStateAction<number>>,
+    setTimeToCompletePost : React.Dispatch<React.SetStateAction<string>>
 }
 
 export default function TodoForm(props: Readonly<TodoSubmit>){
 
-    function formatDate(date: Date){
-        return date.toISOString().slice(0,16);
-    }
+
+
     function handleStartDateChange(event : ChangeEvent<HTMLInputElement>) {
         props.setStart(new Date(event.target.value));
         event.preventDefault();
@@ -27,22 +30,15 @@ export default function TodoForm(props: Readonly<TodoSubmit>){
         props.setDateDeadline(new Date(event.target.value));
         event.preventDefault();
     }
-    /*function submit(event:FormEventHandler<HTMLFormElement>) :   {
-        return {
-            id: null,
-            title: event.arguments.title,
-            description: event.arguments.description,
-            startDate: event.arguments.startDate,
-            deadline: event.arguments.deadline
-        }
-    }*/
+
 
     return (
         <div className="form-container">
             <div>
             <form onSubmit={props.submitHandler} className="todo-form">
+                <h3> Add a Todo: </h3>
                 <div className="form-element">
-                    <label htmlFor="todo-title" > Choose a title:   </label>
+                    <p> Choose a title:   </p>
                 <input
                     type="text"
                     value={props.title}
@@ -56,14 +52,14 @@ export default function TodoForm(props: Readonly<TodoSubmit>){
                     />
                 </div>
                 <div className="form-element">
-                    <label htmlFor="start-date-time" > Choose a starting Date:     </label>
+                    <p> Choose a starting Date:     </p>
                     <input type="datetime-local"
                        value={formatDate(props.startDate)}
                        onChange={event => handleStartDateChange(event)}
                     />
                 </div>
                 <div className="form-element">
-                    <label htmlFor="deadline-time"> Choose a deadline:     </label>
+                    <p> Choose a deadline:     </p>
                     <input type="datetime-local"
                        id="deadline-time"
                        name="deadline-time"
@@ -71,9 +67,29 @@ export default function TodoForm(props: Readonly<TodoSubmit>){
                        onChange={event => handleDeadlineChange(event)}
                     />
                 </div>
-                <button onSubmit={event=> props.submitHandler(event)}> Submit </button>
+                <div className="form-element">
+                    <p> Choose a grade of importance (1-5):     </p>
+                    <input type="number"
+                           id="importance-number"
+                           name="importance-number"
+                           value={props.gradeOfImportance}
+                           onChange={event => {if(parseInt(event.target.value)>5 || parseInt(event.target.value)<0){ alert("Value must between 1 and 5 inclusively")
+                           } else props.setGradeOfImportancePost(parseInt(event.target.value))}}
+                    />
+                </div>
+                <div className="form-element">
+                    <p> How long will the completion of the task take (in hours):     </p>
+                    <input type="text"
+                           id="completion-time-number"
+                           name="completion-time-number"
+                           value={props.timeToComplete}
+                           onChange={event => {props.setTimeToCompletePost(event.target.value)}}
+                    />
+                </div>
+                <button onSubmit={event=> props.submitHandler(event)} style={{ marginTop: "15px"}}> Submit </button>
+
             </form>
+                </div>
             </div>
-          </div>
     );
 }
