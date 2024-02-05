@@ -22,13 +22,7 @@ public record Todo (String id,
         scoreOfImportance.put(Importance.VERY_IMPORTANT,5);
         if(Objects.equals(scoreOfImportance.get(this.gradeOfImportance), scoreOfImportance.get(o.gradeOfImportance))) {
             if(this.deadline.equals(o.deadline)){
-                if( this.timeToComplete.amount()> o.timeToComplete.amount()){
-                    return 1;
-                }
-                else if (this.timeToComplete.amount()< o.timeToComplete.amount()){
-                    return -1;
-                }
-                else return 0;
+                return Integer.compare(this.timeToComplete.amount(), o.timeToComplete.amount());
             }
             else return this.deadline.compareTo(o.deadline);
         }
@@ -41,4 +35,5 @@ public record Todo (String id,
     public int compare(Todo o1, Todo o2){
         return o1.compareTo(o2);
     }
+
 }
