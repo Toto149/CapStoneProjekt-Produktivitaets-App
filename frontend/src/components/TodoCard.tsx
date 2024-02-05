@@ -86,7 +86,8 @@ export default function TodoCard(props : Readonly<propsTodo>){
                         </div>
                     </div>
                     <div>
-                        <p>Deadline: {props.deadline.toLocaleTimeString()} </p>
+                        <p> Start: {props.startDate.toLocaleDateString() + " " + props.startDate.toLocaleTimeString()} <br/>
+                            Deadline: {props.deadline.toLocaleDateString() + " " + props.deadline.toLocaleTimeString()}</p>
                     </div>
                 </div>}
         {isDetailClicked && <div className="container" >
@@ -101,7 +102,7 @@ export default function TodoCard(props : Readonly<propsTodo>){
                     </div>
                     <p>{props.description}</p>
                     <ul>
-                        <li>Beginn: {props.startDate.toLocaleDateString() + " " + props.startDate.toLocaleTimeString()}</li>
+                        <li>Start: {props.startDate.toLocaleDateString() + " " + props.startDate.toLocaleTimeString()}</li>
                         <li>Deadline: {props.deadline.toLocaleDateString() + " " + props.deadline.toLocaleTimeString()}</li>
                         <li>Grade of Importance: {gradeOfImportanceToText(props.gradeOfImportance.toString())}</li>
                         <li>How long it takes: {props.timeToComplete.amount +" " + props.timeToComplete.timeUnit.toString().toLowerCase()} </li>
