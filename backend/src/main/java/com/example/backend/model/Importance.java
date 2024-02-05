@@ -1,13 +1,10 @@
 package com.example.backend.model;
 
 public enum Importance {
-    BARELY_IMPORTANT(1),
-    MODERATELY_IMPORTANT(2),
-    IMPORTANT(3),
-    QUITE_IMPORTANT(4),
-    VERY_IMPORTANT(5);
+    BARELY_IMPORTANT,
+    MODERATELY_IMPORTANT,
+    IMPORTANT,
+    QUITE_IMPORTANT,
+    VERY_IMPORTANT;
 
-    Importance(int gradeOfImportance){
-
-    }
 }
