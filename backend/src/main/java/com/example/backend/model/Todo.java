@@ -9,7 +9,7 @@ public record Todo (String id,
                     LocalDateTime startDate,
                     LocalDateTime deadline,
                     Importance gradeOfImportance,
-                    CompletionTime timeToComplete) implements Comparable<Todo>, Comparator<Todo> {
+                    CompletionTime timeToComplete) implements Comparable<Todo>{
 
 
     @Override
@@ -31,9 +31,6 @@ public record Todo (String id,
         }
         return 1;
     }
-    @Override
-    public int compare(Todo o1, Todo o2){
-        return o1.compareTo(o2);
-    }
+
 
 }
